@@ -11,13 +11,15 @@ import numpy as np
 #           └───────────────┴──────────┴──────────┴──────────┴──────────┘
 
 class OHLC():
-    def __init__(self, price_info):
+    def __init__(self, price_info, window_size):
         self.price_info = price_info
+        self.window_size = window_size
 
-    def step1_choose_window_to_plot(self, start, end, horizon_start, horizon_end):
-        self.current_window = self.price_info.loc[start:end].copy()
-        self.horizon_start = self.price_info.loc[horizon_start]
-        self.horizon_end = self.price_info.loc[horizon_end]
+    def step1_choose_window_to_plot(self, start, end, horizon_start, horizon_end, past_start):
+        self.current_window = self.price_info.iloc[start:end].copy()
+        self.horizon_start = self.price_info.iloc[horizon_start]
+        self.horizon_end = self.price_info.iloc[horizon_end]
+        self.m_avg_data = self.price_info.iloc[past_start:end].copy()
         self.volume = self.current_window["Vol"].copy()
         self.current_window.drop(["Vol"], axis = 1, inplace = True)
 
@@ -81,6 +83,10 @@ class OHLC():
             for y in range(self.height):
                 if y > self.height - self.scaled_vol[idx]:
                     self.pixels[x, y] = (255, 255, 255)
+
+    def calculate_moving_avg(self):
+        for i in range(0, len(self.m_avg_data) - sel.window_size):
+            avg_window = self.m_avg_data.iloc[] ## DA FINIRE
     
     def step6_annotate_image(self):
         start_price = self.horizon_start["Open"]
@@ -95,8 +101,8 @@ class OHLC():
         del self.current_window_scaled
         del self.current_window
 
-    def plot_window(self, start, end, horizon_start, horizon_end, directory_not_complete):
-        self.step1_choose_window_to_plot(start, end, horizon_start, horizon_end)
+    def plot_window(self, start, end, horizon_start, horizon_end, past_start, directory_not_complete):
+        self.step1_choose_window_to_plot(start, end, horizon_start, horizon_end, past_start)
         self.step2_scale_window()
         self.step3_create_image_object()
         self.step4_draw_price_on_image()
