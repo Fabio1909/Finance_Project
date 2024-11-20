@@ -14,6 +14,7 @@ class OHLC():
     def __init__(self, price_info, window_size):
         self.price_info = price_info
         self.window_size = window_size
+        self.kill = False
 
     def step1_choose_window_to_plot(self, start, end, horizon_start, horizon_end, past_start):
         self.current_window = self.price_info.iloc[start:end].copy()
@@ -31,8 +32,11 @@ class OHLC():
             self.moving_average.append(avg_value)
 
     def step2_scale_window(self):
-        _max = max(max(self.current_window.max()), max(self.moving_average))
-        _min = min(min(self.current_window.min()), min(self.moving_average))
+        _max = max(self.current_window.max()) # max(max(self.current_window.max()), max(self.moving_average))
+        _min = min(self.current_window.min()) # min(min(self.current_window.min()), min(self.moving_average))
+        if _max == _min:
+            self.kill = True
+            return
         self.current_window_scaled = self.current_window.to_numpy()
         self.current_window_scaled = np.round(((self.current_window_scaled - _min)/(_max - _min))*99)
         self.current_window_scaled = self.current_window_scaled.astype(int)
@@ -43,6 +47,9 @@ class OHLC():
     def __scale_volume(self):
         _max = max(self.volume)
         _min = min(self.volume)
+        if _max == _min:
+            self.kill = True
+            return
         self.scaled_vol = list(np.round(((self.volume - _min)/(_max - _min))*20))
         self.scaled_vol = [int(item) for item in self.scaled_vol]
 
@@ -116,9 +123,9 @@ class OHLC():
         self.step1_choose_window_to_plot(start, end, horizon_start, horizon_end, past_start)
         # Some checks to ensure everything works as intended
         if self.m_avg_data.empty:
-            print("Skipping plot as m_avg_data is empty.")
+            #print("Skipping plot as m_avg_data is empty.")
             return  
-        if self.current_window.isnull().any():
+        if self.current_window.isnull().any().any():
             print("Skipping plot as current_window contains NaN values.")
             return
         if self.horizon_start is None or self.horizon_end is None:
@@ -126,12 +133,24 @@ class OHLC():
             return
         if self.m_avg_data.isnull().any():
             print("Skipping plot as moving average data contains NaN values.")
+            return
+        if self.volume.isnull().any():
+            print("Skipping plot cause volume data is null")
+            return
 
         self.calculate_moving_avg()
         self.step2_scale_window()
+        if self.kill:
+            print("There is a problem with the scaling min and max are the same not able to plot")
+            self.kill = False
+            return
         self.step3_create_image_object()
         self.step4_draw_price_on_image()
         self.step5_draw_volume()
+        if self.kill:
+            print("Problem with volume")
+            self.kill = False
+            return
         #self.draw_moving_average()
         self.step6_annotate_image()
         self.step7_save_img(directory_not_complete)
