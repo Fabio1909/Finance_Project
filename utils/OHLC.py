@@ -38,11 +38,11 @@ class OHLC():
             self.kill = True
             return
         self.current_window_scaled = self.current_window.to_numpy()
-        self.current_window_scaled = np.round(((self.current_window_scaled - _min)/(_max - _min))*99)
+        self.current_window_scaled = np.round(((self.current_window_scaled - _min)/(_max - _min))*27)
         self.current_window_scaled = self.current_window_scaled.astype(int)
-        self.current_window_scaled = 99 - self.current_window_scaled
+        self.current_window_scaled = 27 - self.current_window_scaled
         # moving avg
-        self.moving_avg_scaled = [int(round(((item - _min)/(_max - _min))*99)) for item in self.moving_average]
+        self.moving_avg_scaled = [int(round(((item - _min)/(_max - _min))*27)) for item in self.moving_average]
 
     def __scale_volume(self):
         _max = max(self.volume)
@@ -50,11 +50,11 @@ class OHLC():
         if _max == _min:
             self.kill = True
             return
-        self.scaled_vol = list(np.round(((self.volume - _min)/(_max - _min))*20))
+        self.scaled_vol = list(np.round(((self.volume - _min)/(_max - _min))*4))
         self.scaled_vol = [int(item) for item in self.scaled_vol]
 
     def step3_create_image_object(self):
-        self.width, self.height = len(self.current_window_scaled) * 3, 125
+        self.width, self.height = len(self.current_window_scaled) * 3, 32
         self.image = Image.new("L", (self.width, self.height), "black")
         self.pixels = self.image.load()
 
