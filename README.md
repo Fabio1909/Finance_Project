@@ -7,13 +7,12 @@
 
 # Gia fatto
 - Trovato dati
-- Quasi fatto plotting OHLC (manca solo moving average)
-- Quasi fatto plotting Candele (manca volume e moving average)
 - Creare 3 dataset OHLC: 5 giorni, 10 giorni e 60 giorni
-- Creare 3 dataset Candle: 5 giorni, 10 giorni e 60 giorni
+- Fatto CNN 5 giorni
+
 
 # To do
- Creare e trainare 3 architetture CNN: 5 giorni, 10 giorni e 60 giorni
+- Creare e trainare architetture CNN:  10 giorni e 60 giorni
 - Testare OHLC vs Candles e analizzare risultati
 - Provare a usare un NN normale con gli stessi dati (Forse)
 - Troare altri dati, creare immagini, e applicare CNN trainato
