@@ -34,7 +34,8 @@ The project involves the following steps:
 - Detailed results and comparisons can be found in `Project_presentation.pdf`.
 
 ## References
-Kelly, B., Pruitt, S., & Su, Y. (2023). (Re-)imag(in)ing Price Trends. Journal of Financial Economics, [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756587].
+Jiang, Jingwen and Kelly, Bryan T. and Xiu, Dacheng, (Re-)Imag(in)ing Price Trends (December 1, 2020). Chicago Booth Research Paper No. 21-01, Available at SSRN: https://ssrn.com/abstract=3756587 or http://dx.doi.org/10.2139/ssrn.3756587
+
 
 ## License
 
