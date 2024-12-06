@@ -1,6 +1,6 @@
 # (Re)Imagining Price Trends: A Replication Study
 
-This project is a replication of the methodology introduced in the paper *(Re)Imag(in)ing Price Trends* by Kelly et al. The study explores machine learning techniques to detect complex price patterns that traditional finance methods might miss. Specifically, the methodology uses convolutional neural networks (CNNs) trained on price chart images to predict stock returns and create portfolios.
+This project is a replication of the methodology introduced in the paper *(Re-)Imag(in)ing Price Trends* by Kelly et al. The study explores machine learning techniques to detect complex price patterns that traditional finance methods might miss. Specifically, the methodology uses convolutional neural networks (CNNs) trained on price chart images to predict stock returns and create portfolios.
 
 ## Overview
 
@@ -32,6 +32,9 @@ The project involves the following steps:
 - The 5-day CNN model outperformed benchmarks with an overall return of 65.16% and an average yearly return of 13.98% (long-only strategy).
 - Longer prediction horizons (20-day, 60-day) had diminishing returns.
 - Detailed results and comparisons can be found in `Project_presentation.pdf`.
+
+## References
+Kelly, B., Pruitt, S., & Su, Y. (2023). (Re-)imag(in)ing Price Trends. Journal of Financial Economics, [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756587].
 
 ## License
 
